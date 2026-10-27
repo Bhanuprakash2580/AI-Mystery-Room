@@ -1,0 +1,7 @@
+export type Status = 'queued' | 'generating' | 'validating' | 'playable' | 'failed' | 'completed';
+export type EvidenceType = 'chat' | 'image' | 'audio' | 'document' | 'statement' | 'timeline';
+export interface Suspect { id: string; name: string; role: string; description: string; relationshipToIncident: string; publicMotive?: string; publicAlibi: string; }
+export interface Evidence { id: string; title: string; type: EvidenceType; description: string; sourceLabel: string; occurredAt?: string; relatedSuspectIds: string[]; content: Record<string, unknown>; }
+export interface CaseRecord { id: string; title: string; premise: string; setting?: string; category: string; difficulty: 'easy' | 'medium' | 'hard'; status: Status; generationStage?: string; generationErrorCode?: string; createdAt: string; publicCaseData?: { summary: string; incident: string; location: string; incidentTime: string; objective: string; suspects: Suspect[]; }; evidenceCount?: number; }
+export interface Progress { viewedEvidenceIds: string[]; bookmarkedEvidenceIds: string[]; notes: string; status: 'investigating' | 'accused' | 'completed'; attempts: number; }
+export interface Result { culprit: Suspect; selectedSuspectId: string; isCorrect: boolean; theory?: string; motive: string; explanation: string; timeline: { time: string; event: string }[]; decisiveEvidence: { id: string; title: string; explanation: string }[]; misleadingClues: { id: string; title: string; explanation: string }[]; }
